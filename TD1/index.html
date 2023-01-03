@@ -68,7 +68,7 @@ document.getElementById('resetexo2').addEventListener('click', function() {
     <div id="y"></div>
     <div id="z"></div>
     <script>
-        if (window.DeviceOrientationEvent) {
+        /*if (window.DeviceOrientationEvent) {
             window.addEventListener("deviceorientation", function(event) {
                 var rotateDegrees = event.alpha;
                 var leftToRight = event.gamma;
@@ -78,15 +78,43 @@ document.getElementById('resetexo2').addEventListener('click', function() {
                 var z = event.accelaration.z;
                 handleOrientationEvent(frontToBack, leftToRight, rotateDegrees, x, y, z);
             }, true);
-            }
-            var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees, x, y, z) {
+            }*/
+            /*var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees, x, y, z) {
                 document.getElementById('alpha').innerHTML = `alpha : ${frontToBack}`;
                 document.getElementById('gamma').innerHTML = `gamma : ${leftToRight}`;
                 document.getElementById('beta').innerHTML = `beta : ${rotateDegrees}`;
                 document.getElementById('x').innerHTML = `x : ${x}`;
                 document.getElementById('y').innerHTML = `y : ${y}`;
                 document.getElementById('z').innerHTML = `z : ${z}`;
-            };
+            };*/
+    </script>
+    <div>------------------------------------------------</div>
+    <div>Exo 4 Tester les touch events avec votre smartphone</div>
+    <div id="t">t</div>
+    <canvas id="canvas" width="600" height="600" style="border:solid black 1px;">
+        Votre navigateur ne prend pas en charge l'élément canvas.
+    </canvas>
+    <script>
+        function startup() {
+            const el = document.getElementById('canvas');
+            el.addEventListener('touchstart', handleStart);
+            el.addEventListener('touchend', handleEnd);
+            el.addEventListener('touchcancel', handleCancel);
+            el.addEventListener('touchmove', handleMove);
+        }
+        function handleStart(event){
+            document.getElementById('t').innerHTML = '1';
+        }
+        function handleEnd(event){
+            document.getElementById('t').innerHTML = '2';
+        }
+        function handleCancel(event){
+            document.getElementById('t').innerHTML = '3';
+        }
+        function handleMove(event){
+            document.getElementById('t').innerHTML = '4';
+        }
+        document.addEventListener('DOMContentLoaded', startup);
     </script>
 </body>
 </html>
