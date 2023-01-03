@@ -61,6 +61,9 @@ document.getElementById('resetexo2').addEventListener('click', function() {
     </script>
     <div>------------------------------------------------</div>
     <div>Exo 3 Tester l'orientation d'un smartphone</div>
+    <div id="alpha"></div>
+    <div id="gamma"></div>
+    <div id="beta"></div>
     <div id="x"></div>
     <div id="y"></div>
     <div id="z"></div>
@@ -70,13 +73,19 @@ document.getElementById('resetexo2').addEventListener('click', function() {
                 var rotateDegrees = event.alpha;
                 var leftToRight = event.gamma;
                 var frontToBack = event.beta;
-                handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+                var x = event.accelaration.x;
+                var y = event.accelaration.y;
+                var z = event.accelaration.z;
+                handleOrientationEvent(frontToBack, leftToRight, rotateDegrees, x, y, z);
             }, true);
             }
-            var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
-                document.getElementById('x').innerHTML = `alpha : ${frontToBack}`;
-                document.getElementById('y').innerHTML = `gamma : ${leftToRight}`;
-                document.getElementById('z').innerHTML = `beta : ${rotateDegrees}`;
+            var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees, x, y, z) {
+                document.getElementById('alpha').innerHTML = `alpha : ${frontToBack}`;
+                document.getElementById('gamma').innerHTML = `gamma : ${leftToRight}`;
+                document.getElementById('beta').innerHTML = `beta : ${rotateDegrees}`;
+                document.getElementById('x').innerHTML = `x : ${x}`;
+                document.getElementById('y').innerHTML = `y : ${y}`;
+                document.getElementById('z').innerHTML = `z : ${z}`;
             };
     </script>
 </body>
