@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TD1</title>
+	<meta charset="utf-8"/>
+</head>
+<body>
+    <div>Nicolas Saillant TD1</div>
+    <div>Exo 2 Testez accès Géolocalisation avec smartphone et Html</div>
+    <div id="latitude"></div>
+    <div id="longitude"></div>
+    <div id="altitude"></div>
+    <div id="altitudeAccuracy"></div>
+    <div id="heading"></div>
+    <div id="speed"></div>
+    <div id="accuracy"></div>
+    <button id="button">Obtenir les informations de géolocalisation</button>
+    <button id="reset">Réinitialiser</button>
+	<script>
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+            };
+
+function success(pos) {
+    document.getElementById('latitude').innerHTML = `Latitude : ${pos.coords.latitude}`;
+    document.getElementById('longitude').innerHTML = `Longitude : ${pos.coords.longitude}`;
+    document.getElementById('altitude').innerHTML = `Altitude : ${pos.coords.altitude}`;
+    document.getElementById('altitudeAccuracy').innerHTML = `AltitudeAccuracy : ${pos.coords.altitudeAccuracy}`;
+    document.getElementById('heading').innerHTML = `direction : ${pos.coords.heading}`;
+    document.getElementById('speed').innerHTML = `vitesse : ${pos.coords.speed}`;
+    document.getElementById('accuracy').innerHTML = `La précision est de ${pos.coords.accuracy} mètres.`;
+
+    showDate();
+    }
+
+function error(err) {
+  console.warn(`ERREUR (${err.code}): ${err.message}`);
+}
+
+function showDate(){
+    var date = new Date();
+    console.log(date.toDateString);
+}
+
+document.getElementById('button').addEventListener('click', function() {
+    navigator.geolocation.watchPosition(success, error, options);
+});
+
+document.getElementById('reset').addEventListener('click', function() {
+  document.getElementById('latitude').innerHTML = '';
+  document.getElementById('longitude').innerHTML = '';
+  document.getElementById('altitude').innerHTML = '';
+  document.getElementById('altitudeAccuracy').innerHTML = '';
+  document.getElementById('heading').innerHTML = '';
+  document.getElementById('speed').innerHTML = '';
+  document.getElementById('accuracy').innerHTML = '';
+});
+    </script>
+    <div>Exo 3 Tester l'orientation d'un smartphone</div>
+</body>
+</html>
