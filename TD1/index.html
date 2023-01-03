@@ -90,7 +90,8 @@ document.getElementById('resetexo2').addEventListener('click', function() {
     </script>
     <div>------------------------------------------------</div>
     <div>Exo 4 Tester les touch events avec votre smartphone</div>
-    <div id="t">t</div>
+    <div id="touchposition"></div>
+    <div id="touch"></div>
     <canvas id="canvas" width="600" height="600" style="border:solid black 1px;">
         Votre navigateur ne prend pas en charge l'élément canvas.
     </canvas>
@@ -103,16 +104,18 @@ document.getElementById('resetexo2').addEventListener('click', function() {
             el.addEventListener('touchmove', handleMove);
         }
         function handleStart(event){
-            document.getElementById('t').innerHTML = '1';
+            document.getElementById('touchposition').innerHTML = event.touches[0].clientX;
+            document.getElementById('touchposition').innerHTML = event.touches[0].clientY;
+            document.getElementById('touch').innerHTML = 'touchstart';
         }
         function handleEnd(event){
-            document.getElementById('t').innerHTML = '2';
+            document.getElementById('touch').innerHTML = 'touchend';
         }
         function handleCancel(event){
-            document.getElementById('t').innerHTML = '3';
+            document.getElementById('touch').innerHTML = 'touchcancel';
         }
         function handleMove(event){
-            document.getElementById('t').innerHTML = '4';
+            document.getElementById('touch').innerHTML = 'touchmove';
         }
         document.addEventListener('DOMContentLoaded', startup);
     </script>
