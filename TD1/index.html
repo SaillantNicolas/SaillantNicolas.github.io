@@ -6,6 +6,7 @@
 </head>
 <body>
     <div>Nicolas Saillant TD1</div>
+    <div>------------------------------------------------</div>
     <div>Exo 2 Testez accès Géolocalisation avec smartphone et Html</div>
     <div id="latitude"></div>
     <div id="longitude"></div>
@@ -14,8 +15,9 @@
     <div id="heading"></div>
     <div id="speed"></div>
     <div id="accuracy"></div>
-    <button id="button">Obtenir les informations de géolocalisation</button>
-    <button id="reset">Réinitialiser</button>
+    <div id="date"></div>
+    <button id="buttonexo2">Obtenir les informations de géolocalisation</button>
+    <button id="resetexo2">Réinitialiser</button>
 	<script>
         var options = {
             enableHighAccuracy: true,
@@ -30,9 +32,6 @@ function success(pos) {
     document.getElementById('altitudeAccuracy').innerHTML = `AltitudeAccuracy : ${pos.coords.altitudeAccuracy}`;
     document.getElementById('heading').innerHTML = `direction : ${pos.coords.heading}`;
     document.getElementById('speed').innerHTML = `vitesse : ${pos.coords.speed}`;
-    document.getElementById('accuracy').innerHTML = `La précision est de ${pos.coords.accuracy} mètres.`;
-
-    showDate();
     }
 
 function error(err) {
@@ -41,14 +40,15 @@ function error(err) {
 
 function showDate(){
     var date = new Date();
-    console.log(date.toDateString);
+    document.getElementById('date').innerHTML = `Date : ${date.toDateString()}`;
 }
 
-document.getElementById('button').addEventListener('click', function() {
+document.getElementById('buttonexo2').addEventListener('click', function() {
     navigator.geolocation.watchPosition(success, error, options);
+    showDate();
 });
 
-document.getElementById('reset').addEventListener('click', function() {
+document.getElementById('resetexo2').addEventListener('click', function() {
   document.getElementById('latitude').innerHTML = '';
   document.getElementById('longitude').innerHTML = '';
   document.getElementById('altitude').innerHTML = '';
@@ -56,8 +56,28 @@ document.getElementById('reset').addEventListener('click', function() {
   document.getElementById('heading').innerHTML = '';
   document.getElementById('speed').innerHTML = '';
   document.getElementById('accuracy').innerHTML = '';
+  document.getElementById('date').innerHTML = '';
 });
     </script>
+    <div>------------------------------------------------</div>
     <div>Exo 3 Tester l'orientation d'un smartphone</div>
+    <div id="x"></div>
+    <div id="y"></div>
+    <div id="z"></div>
+    <script>
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener("deviceorientation", function(event) {
+                var rotateDegrees = event.alpha;
+                var leftToRight = event.gamma;
+                var frontToBack = event.beta;
+                handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+            }, true);
+            }
+            var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees) {
+                document.getElementById('x').innerHTML = `alpha : ${frontToBack}`;
+                document.getElementById('y').innerHTML = `gamma : ${leftToRight}`;
+                document.getElementById('z').innerHTML = `beta : ${rotateDegrees}`;
+            };
+    </script>
 </body>
 </html>
