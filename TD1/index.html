@@ -97,6 +97,12 @@ document.getElementById('resetexo2').addEventListener('click', function() {
         Votre navigateur ne prend pas en charge l'élément canvas.
     </canvas>
     <script>
+	let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+	    
         function startup() {
             const el = document.getElementById('canvas');
             el.addEventListener('touchstart', handleStart);
@@ -108,15 +114,34 @@ document.getElementById('resetexo2').addEventListener('click', function() {
             document.getElementById('touchpositionx').innerHTML = `x : ${event.touches[0].clientX}`;
             document.getElementById('touchpositiony').innerHTML = `y : ${event.touches[0].clientY}`;
             document.getElementById('touch').innerHTML = 'touchstart';
+	    isDrawing = true;
+            lastX = event.touches[0].clientX - canvas.offsetLeft;
+            lastY = event.touches[0].clientY - canvas.offsetTop;
         }
         function handleEnd(event){
             document.getElementById('touch').innerHTML = 'touchend';
+	    isDrawing = false;
         }
         function handleCancel(event){
             document.getElementById('touch').innerHTML = 'touchcancel';
+	    isDrawing = false;
         }
         function handleMove(event){
             document.getElementById('touch').innerHTML = 'touchmove';
+	    if (isDrawing) {
+                const currentX = event.touches[0].clientX - canvas.offsetLeft;
+                const currentY = event.touches[0].clientY - canvas.offsetTop;
+                draw(lastX, lastY, currentX, currentY);
+                lastX = currentX;
+                lastY = currentY;
+            }
+        }
+	function draw(startX, startY, endX, endY) {
+            ctx.beginPath();
+            ctx.strokeStyle = 'black';
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(endX, endY);
+            ctx.stroke();
         }
         document.addEventListener('DOMContentLoaded', startup);
     </script>
