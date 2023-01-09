@@ -68,7 +68,7 @@ document.getElementById('resetexo2').addEventListener('click', function() {
     <div id="y"></div>
     <div id="z"></div>
     <script>
-        /*if (window.DeviceOrientationEvent) {
+        if (window.DeviceOrientationEvent) {
             window.addEventListener("deviceorientation", function(event) {
                 var rotateDegrees = event.alpha;
                 var leftToRight = event.gamma;
@@ -78,15 +78,15 @@ document.getElementById('resetexo2').addEventListener('click', function() {
                 var z = event.accelaration.z;
                 handleOrientationEvent(frontToBack, leftToRight, rotateDegrees, x, y, z);
             }, true);
-            }*/
-            /*var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees, x, y, z) {
+            }
+           	var handleOrientationEvent = function(frontToBack, leftToRight, rotateDegrees, x, y, z) {
                 document.getElementById('alpha').innerHTML = `alpha : ${frontToBack}`;
                 document.getElementById('gamma').innerHTML = `gamma : ${leftToRight}`;
                 document.getElementById('beta').innerHTML = `beta : ${rotateDegrees}`;
                 document.getElementById('x').innerHTML = `x : ${x}`;
                 document.getElementById('y').innerHTML = `y : ${y}`;
                 document.getElementById('z').innerHTML = `z : ${z}`;
-            };*/
+            };
     </script>
     <div>------------------------------------------------</div>
     <div>Exo 4 Tester les touch events avec votre smartphone</div>
