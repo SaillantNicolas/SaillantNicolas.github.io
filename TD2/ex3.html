@@ -10,7 +10,6 @@
     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
     crossorigin=""></script>
     <script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js?v1.3.0"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nicolas Saillant TD2 exo3</title>
 </head>
@@ -34,17 +33,15 @@
                     zoom: 13
                 });
             map.addLayer(layer);
-            $.getJSON("https://geo.api.gouv.fr/communes?codePostal=06&type=commune-actuelle&fields=nom&format=geojson&geometry=centre", function (data) {
-                var datalayer = L.geoJson(data, {
-                    onEachFeature: function (feature, featureLayer) {
-                        featureLayer.bindPopup(feature.properties.date);
-                    },
-                    pointToLayer: function (feature, latlng) {
-                        return L.circleMarker(latlng, geojsonMarkerOptions);
+            fetch("http://opendata.nicecotedazur.org/data/storage/f/2022-07-15T07%3A04%3A11.498Z/bornes-rm-a8.geojson")
+                .then(function (res) {
+                    if (res.ok) {
+                        return res.json();
                     }
-                }).addTo(map);
-                map.fitBounds(datalayer.getBounds());
-            });
+                })
+                .then(function (value) {
+                    L.geoJSON(value).addTo(map);
+                });
         }
         function error(err) {
             console.warn(`ERREUR (${err.code}): ${err.message}`);
