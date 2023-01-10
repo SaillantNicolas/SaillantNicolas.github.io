@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+    <script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js?v1.3.0"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicolas Saillant TD2 exo bonus</title>
+</head>
+<body>
+    <div id="map"></div>
+    <style>#map { height: 1080px; }</style>
+    <script>
+        var geojsonMarkerOptions = {
+            radius: 8,
+            fillColor: "#ff7800",
+            color: "#000",
+            weight: 1,
+            opacity: 1,
+            fillOpacity: 0.8
+        };
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        var marseille = {
+                latitude:43.300213,
+                longitude: 5.372876
+            }
+            var nice = {
+                latitude:43.712853,
+                longitude: 7.240107
+            }
+        function success(pos){
+                var layer = new L.StamenTileLayer("terrain");
+                var map = new L.Map("map", {
+                    center: new L.LatLng(pos.coords.latitude, pos.coords.longitude),
+                    zoom: 13
+                });
+            map.addLayer(layer);
+            fetch("https://api.mapbox.com/directions/v5/mapbox/driving/43.300213%2C5.372876%3B43.712853%2C7.240107?alternatives=true&geometries=geojson&language=en&overview=simplified&steps=true&access_token=pk.eyJ1IjoiY3YwNiIsImEiOiJjajg2MmpzYjcwbWdnMzNsc2NzM2l4eW0yIn0.TfDJipR5II7orUZaC848YA")
+                .then(function (res) {
+                    if (res.ok) {
+                        return res.json();
+                    }
+                })
+                .then(function (value) {
+                    console.log(value);
+                    L.geoJSON(value.routes[0].geometry).addTo(map);
+                    var markermarseille = L.marker(value.waypoints[0].location).addTo(map);
+                    var markermarseille = L.marker(value.waypoints[1].location).addTo(map);
+                });
+        }
+        function error(err) {
+            console.warn(`ERREUR (${err.code}): ${err.message}`);
+        }
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+            };
+    </script>
+</body>
+</html>
