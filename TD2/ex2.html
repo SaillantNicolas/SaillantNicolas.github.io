@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+    integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+    integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+    crossorigin=""></script>
+    <script type="text/javascript" src="https://stamen-maps.a.ssl.fastly.net/js/tile.stamen.js?v1.3.0"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicolas Saillant TD2 exo2</title>
+</head>
+<body>
+    <div id="map"></div>
+    <style>#map { height: 1080px; }</style>
+    <script>
+        function distance(pos1, pos2) {
+            const R = 6371; // Rayon de la Terre en km
+            const lat1 = pos1[0];
+            const lon1 = pos1[1];
+            const lat2 = pos2[0];
+            const lon2 = pos2[1];
+            const dLat = (lat2 - lat1) * (Math.PI / 180);
+            const dLon = (lon2 - lon1) * (Math.PI / 180);
+            const lat1Rad = lat1 * (Math.PI / 180);
+            const lat2Rad = lat2 * (Math.PI / 180);
+            const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1Rad) * Math.cos(lat2Rad);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+            }
+            var marseille = {
+                latitude:43.300213,
+                longitude: 5.372876
+            }
+            var nice = {
+                latitude:43.712853,
+                longitude: 7.240107
+            }
+        navigator.geolocation.getCurrentPosition(success, error, options);
+        function success(pos){
+                var d = distance([nice.latitude,nice.longitude],[marseille.latitude, marseille.longitude]);
+                var layer = new L.StamenTileLayer("terrain");
+                var map = new L.Map("map", {
+                    center: new L.LatLng(pos.coords.latitude, pos.coords.longitude),
+                    zoom: 13
+                });
+
+            map.addLayer(layer);
+
+            var polygon = L.polygon([
+                [26.543792, -79.926813],
+                [18.582913, -66.422316],
+                [31.672498, -64.744242]
+            ]).addTo(map);
+
+            var polyline = L.polyline([
+                [nice.latitude, nice.longitude],
+                [marseille.latitude, marseille.longitude]
+            ]).bindPopup('distance : ' + d).addTo(map);
+
+            var circle = L.circle([pos.coords.latitude, pos.coords.longitude], {
+                color: 'red',
+                fillColor: '#f03',
+                fillOpacity: 0.5,
+                radius: pos.coords.accuracy
+            }).addTo(map);
+            var markerPostion = L.marker([pos.coords.latitude, pos.coords.longitude]).addTo(map);
+            var markerNice = L.marker([nice.latitude, nice.longitude]).addTo(map);
+            var markerMarseille = L.marker([marseille.latitude, marseille.longitude]).addTo(map);
+        }
+        function error(err) {
+            console.warn(`ERREUR (${err.code}): ${err.message}`);
+        }
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+            };
+    </script>
+</body>
+</html>
