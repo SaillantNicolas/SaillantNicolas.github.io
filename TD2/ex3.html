@@ -33,7 +33,7 @@
                     zoom: 13
                 });
             map.addLayer(layer);
-            fetch("http://opendata.nicecotedazur.org/data/storage/f/2022-07-15T07%3A04%3A11.498Z/bornes-rm-a8.geojson")
+            fetch("./bornes-rm-a8.geojson")
                 .then(function (res) {
                     if (res.ok) {
                         return res.json();
