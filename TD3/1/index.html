@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicolas Saillant TD3 1</title>
+</head>
+<body>
+    <p>Canvas</p>
+    <img id="myimage" src="../ImageMontagneCielPrairie.jpg" alt="Image de montagne prarie ciel" style="display:none">
+    <canvas id="mycanvas" width="900" height="500" style="border:solid;"></canvas>
+    <script>
+        window.onload = function() {
+            var img = document.getElementById("myimage");
+            var canvas = document.getElementById("mycanvas");
+            var ctx = canvas.getContext('2d');
+            ctx.drawImage(img,10,10,880,480);
+            ctx.fillStyle = 'orange';
+            ctx.fillRect(650,300,150,150);
+            ctx.fillStyle = 'brown';
+            ctx.fillRect(680,350,50,100);
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.moveTo(650,300);
+            ctx.lineTo(800,300);
+            ctx.lineTo(725,250);
+            ctx.fill();
+            ctx.fillStyle = 'yellow';
+            ctx.beginPath();
+            ctx.ellipse(100, 100, 50, 75, 350, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+        }
+    </script>
+</body>
+</html>
