@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Saillant Nicoals TD5 ARJS</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+</head>
+
+<body>
+  <a-scene embedded arjs>
+    <a-marker preset="hiro">
+      <a-entity position="0 0 -1.6" scale="0.15 0.15 0.15"
+        gltf-model="./soldier.glb"></a-entity>
+    </a-marker>
+    <a-entity id="localizedEntity" material='color: red' geometry='primitive: box' scale="10 10 10"></a-entity>
+    <a-camera gps-new-camera='gpsMinDistance: 5'></a-camera>
+  </a-scene>
+  <script>
+    document.addEventListener("DOMContentLoaded",function () {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const lat = position.coords.latitude
+          const lng = position.coords.longitude
+          const entity = document.getElementById("localizedEntity")
+
+          entity.setAttribute("gps-new-entity-place", `latitude: ${lat}; longitude: ${lng}`)
+        })
+      },
+      false
+    )
+  </script>
+</body>
+
+</html>
